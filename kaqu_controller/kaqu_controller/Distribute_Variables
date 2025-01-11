@@ -1,6 +1,10 @@
 Gait_Controller_김진우
 
 PID_Controller_최대영
+자신의 파일_이름 아래에 변수 및 ParamsAndCmd 포함 여부 작성
+ex)
+max_I = O
+choidaeyoung.array = X
 
 Rest_Controller_엄경현
 
