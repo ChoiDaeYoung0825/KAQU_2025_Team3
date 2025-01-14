@@ -1,5 +1,14 @@
 Gait_Controller_김진우
-
+stance_time,swing_time,time_step=x(이미 params에 존재)
+contact_phases=x
+def_stance=x
+def stance_ticks,swing_ticks=O (로봇제어의 기초단위이기에 자주 사용될거 같음) (함수의 형태가 아니라 아예 변수로 바꿔 params에 추가하는 것은 어떤지 궁금함)
+def phase_ticks=x
+def phase lengh=x
+def phase index = x
+def subphase_ticks=x
+def contacts = x
+-------------------------------------------------------------
 PID_Controller_최대영
 자신의 파일_이름 아래에 변수 및 ParamsAndCmd 포함 여부 작성
 ex)
