@@ -14,7 +14,15 @@ PID_Controller_최대영
 ex)
 max_I = O
 choidaeyoung.array = X
-
+-------------------------------------------------------------
 Rest_Controller_엄경현
-
+def_stance = X (이미 존재)
+pid_controller = X
+use_imu = X (이미 존재)
+use_button = O
+imu_roll = X (이미 존재)
+imu_pitch = X (이미 존재)
+pid_gains = O (게인값을 입력받게끔 하면 유연성 높아질 듯)
+POSITION_SCALING, ORIENTATION_SCALING = O (스케일링 값을 입력받게끔 하면 유연성 높아질 듯)
+-------------------------------------------------------------
 TrotGait_Controller_오성근
