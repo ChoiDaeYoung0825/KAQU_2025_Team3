@@ -10,10 +10,9 @@ def subphase_ticks=x
 def contacts = x
 -------------------------------------------------------------
 PID_Controller_최대영
-자신의 파일_이름 아래에 변수 및 ParamsAndCmd 포함 여부 작성
-ex)
 max_I = O
-choidaeyoung.array = X
+use_imu = X
+use_button = X
 -------------------------------------------------------------
 Rest_Controller_엄경현
 def_stance = X (이미 존재)
