@@ -26,3 +26,9 @@ pid_gains = O (게인값을 입력받게끔 하면 유연성 높아질 듯)
 POSITION_SCALING, ORIENTATION_SCALING = O (스케일링 값을 입력받게끔 하면 유연성 높아질 듯)
 -------------------------------------------------------------
 TrotGait_Controller_오성근
+autoRest = X
+trotNeeded = X
+z_error_constant = X
+default_stance = O
+def run = X
+def updateStateCommand = X
