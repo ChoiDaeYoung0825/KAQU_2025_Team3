@@ -1,0 +1,71 @@
+#!/usr/bin/env python3
+
+import rclpy
+from rclpy.clock import Clock, ClockType
+import numpy as np
+
+import rclpy.time
+
+class PID_controller(object):  #비례-적분-미분 제어  *피드백 형태임!
+    def __init__(self, kp, ki, kd):
+        self.kp = kp	#이게 PID게인이라는듯
+        self.ki = ki
+        self.kd = kd
+
+        self.desired_roll_pitch = np.array([0.0, 0.0])	#목표 롤 피치
+        self.desired_rpy = np.array([0.0, 0.0, 0.0])  #롤, 피치, 야오 (RPY?)
+
+        # TODO : Tune max_I
+        self.max_I = 0.2  #적분항 제어
+        self.last_error = np.array([0.0,0.0])  #이전 루프에서 계산한 오차
+        
+        self.clock = Clock(clock_type=ClockType.ROS_TIME)
+#주의 생성자에서  바로 reset하지 않으면 last_time, I_term등이 설정 안 되어있는 상태가 될 수 있음.
+
+    def reset(self):
+        self.last_time = self.clock.now()	#시간
+        self.I_term = np.array([0.0,0.0])	#적분항
+        self.D_term = np.array([0.0,0.0])	#미분항
+        self.last_error = np.array([0.0,0.0])	#마지막 오차
+    
+    def run(self, roll, pitch):
+        error = self.desired_roll_pitch - np.array([roll, pitch]) #현재 에러 
+
+        t_now = self.clock.now()
+        step, step_millis = (t_now - self.last_time).seconds_nanoseconds()
+
+        step = step+step_millis	#현재 시각
+
+
+	#적분항 
+        self.I_term = self.I_term + error*step
+        #오차의 넓이?
+        
+        for i in range(2):	#적분항 한계 설정 (Clamping)
+            if(self.I_term[i] < -self.max_I):
+                self.I_term[i] = -self.max_I
+            elif(self.I_term[i] > self.max_I):
+                self.I_term[i] = self.max_I
+      
+      
+	#미분항  오차의 기울기?
+        self.D_term = (error - self.last_error) / step
+
+        self.last_time = t_now
+        self.last_error = error
+
+	#PID 계산 원래는 
+	#P_ret = kp * error
+	#I_ret = ki * self.I_term
+	#D_ret = kd * self.D_term 라는데?
+	
+        P_ret = self.kp * error
+        I_ret = self.ki * error
+        D_ret = self.kd * error
+
+        return P_ret+I_ret+D_ret
+    
+    # def run_rpy(self, roll, pitch, yaw)
+
+    #def desired_RP_angles(self, des_roll, des_pitch):  로 수정?
+        self.desired_roll_pitch = np.array([des_roll, des_pitch])
