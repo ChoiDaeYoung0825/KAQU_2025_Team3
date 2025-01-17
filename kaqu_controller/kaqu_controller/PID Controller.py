@@ -34,7 +34,7 @@ class PID_controller(object):  #비례-적분-미분 제어  *피드백 형태�
         t_now = self.clock.now()
         step, step_millis = (t_now - self.last_time).seconds_nanoseconds()
 
-        step = step+step_millis	#현재 시각
+        step = step+step_millis * 1e-9	#현재 시각
 
 
 	#적분항 
@@ -55,17 +55,12 @@ class PID_controller(object):  #비례-적분-미분 제어  *피드백 형태�
         self.last_error = error
 
 	#PID 계산 원래는 
-	#P_ret = kp * error
-	#I_ret = ki * self.I_term
-	#D_ret = kd * self.D_term 라는데?
-	
-        P_ret = self.kp * error
-        I_ret = self.ki * error
-        D_ret = self.kd * error
+	P_ret = self.kp * error
+	I_ret = self.ki * self.I_term
+	D_ret = self.kd * self.D_term 
 
         return P_ret+I_ret+D_ret
-    
-    # def run_rpy(self, roll, pitch, yaw)
 
-    #def desired_RP_angles(self, des_roll, des_pitch):  로 수정?
+
+    def desired_RP_angles(self, des_roll, des_pitch):
         self.desired_roll_pitch = np.array([des_roll, des_pitch])
